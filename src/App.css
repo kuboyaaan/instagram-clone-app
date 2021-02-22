@@ -15,3 +15,8 @@
 .app_headerImage {
   object-fit: contain;
 }
+
+.app_signup {
+  display: flex;
+  flex-direction: column;
+}
