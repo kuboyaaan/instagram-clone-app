@@ -1,7 +1,24 @@
+import React, { useState, useEffect } from 'react';
+
 import './App.css';
 import Post from './Post';
+import { db, auth, storage } from './firebase';
 
 function App() {
+  // posts: list of objects with username/capture/imageUrl
+  const [posts, setPosts] = useState([]);
+
+  // useEffect: Runs a piece of code based on a specific condition
+  useEffect(() => {
+    db.collection('posts').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => ({
+        // uniqueID
+        id: doc.id,
+        post: doc.data(),
+      })));
+    })
+  }, []);
+
   return (
     <div className="App">
       {/* Header */}
@@ -16,9 +33,12 @@ function App() {
         </div>
         <h1>Hello World</h1>
 
-        <Post />
-        <Post />
-        <Post />
+        {
+          // {id, post}で展開して、取得する
+          posts.map(({id, post}) => (
+            <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+            ))
+        }
       </div>
       {/* Posts... */}
     </div>

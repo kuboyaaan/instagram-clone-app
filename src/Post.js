@@ -3,7 +3,7 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 
 
-function Post() {
+function Post({username, caption, imageUrl}) {
     return (
         <div class="post">
             {/* header -> avatar + username */}
@@ -13,13 +13,13 @@ function Post() {
                     alt="username"
                     src="avatar.jpg"
                 />
-                <h3>Username</h3>
+                <h3>{username}</h3>
             </div>
             {/* immage */}
-            <img className="post_image" src="logo512.png" />
+            <img className="post_image" src={imageUrl} />
 
             {/* usernname + caption */}
-            <h4 className="post_text"><strong>Username</strong> caption</h4>
+            <h4 className="post_text"><strong>{username}</strong> {caption}</h4>
         </div>
     )
 }
