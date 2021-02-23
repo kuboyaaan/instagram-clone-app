@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 
 import './App.css';
 import Post from './Post';
+import ImageUpload from './ImageUpload';
 import { db, auth, storage } from './firebase';
 import { Button, Input } from '@material-ui/core';
 
@@ -71,7 +72,7 @@ function App() {
 
   // useEffect: Runs a piece of code based on a specific condition
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         // uniqueID
         id: doc.id,
@@ -105,6 +106,13 @@ function App() {
 
   return (
     <div className="App">
+      {/* LogInしたusernameを使用する→user.displayName */}
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ): (
+        <h3>Sorry you need to lodin to upload</h3>
+      )}
+
       <Modal
         open={isOpen}
         onClose={() => {setIsOpen(false)}}
