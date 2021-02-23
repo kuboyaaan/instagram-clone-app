@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from  '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import InstagramEmbed from 'react-instagram-embed';
 
 import './App.css';
 import Post from './Post';
@@ -106,13 +107,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* LogInしたusernameを使用する→user.displayName */}
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ): (
-        <h3>Sorry you need to lodin to upload</h3>
-      )}
-
       <Modal
         open={isOpen}
         onClose={() => {setIsOpen(false)}}
@@ -190,29 +184,49 @@ function App() {
             height="40px"
             // alt=""/
           />
+          {
+            user ? (
+              <Button onClick={() => auth.signOut()}>LogOut</Button>
+
+            ) : (
+              <div className="app_loginContainer">
+                <Button onClick={() => setIsOpenSignIn(true)}>Sign In</Button>
+                <Button onClick={() => setIsOpen(true)}>Sign Up</Button>
+              </div>
+            )
+          }
         </div>
-        {
-          user ? (
-            <Button onClick={() => auth.signOut()}>LogOut</Button>
+        <div className=" app_posts">
+          {
+            // {id, post}で展開して、取得する
+            posts.map(({id, post}) => (
+              // keyにidを設定することで、効率よく再レンダリングされる。（以前あったものは維持）
+              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              ))
+          }
+        </div>
+        {/* <InstagramEmbed
+          url='https://instagr.am/p/Zw9o4/'
+          clientAccessToken='123|456'
+          maxWidth={320}
+          hideCaption={false}
+          containerTagName='div'
+          protocol=''
+          injectScript
+          onLoading={() => {}}
+          onSuccess={() => {}}
+          onAfterRender={() => {}}
+          onFailure={() => {}}
+        /> */}
 
-          ) : (
-            <div className="app_loginContainer">
-              <Button onClick={() => setIsOpenSignIn(true)}>Sign In</Button>
-              <Button onClick={() => setIsOpen(true)}>Sign Up</Button>
-            </div>
-          )
-        }
-        <h1>Hello World</h1>
+        {/* LogInしたusernameを使用する→user.displayName */}
+        {user?.displayName ? (
+          <ImageUpload username={user.displayName} />
+        ): (
+          <h3>Sorry you need to lodin to upload</h3>
+        )}
 
-        {
-          // {id, post}で展開して、取得する
-          posts.map(({id, post}) => (
-            // keyにidを設定することで、効率よく再レンダリングされる。（以前あったものは維持）
-            <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
-            ))
-        }
       </div>
-      {/* Posts... */}
     </div>
   );
 }

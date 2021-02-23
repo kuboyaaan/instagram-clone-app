@@ -6,10 +6,16 @@
   background-color: #fafafa;
 }
 
+.app_posts {
+  padding: 20px;
+}
+
 .app_imageContainer {
   border-bottom: 1px solid lightgray;
   background-color: white;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .app_headerImage {
