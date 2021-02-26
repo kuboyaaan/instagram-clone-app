@@ -11,11 +11,14 @@
 }
 
 .app_imageContainer {
+  position: sticky;
+  top: 0;
   border-bottom: 1px solid lightgray;
   background-color: white;
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  z-index: 1;
 }
 
 .app_headerImage {

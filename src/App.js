@@ -201,7 +201,7 @@ function App() {
             // {id, post}で展開して、取得する
             posts.map(({id, post}) => (
               // keyにidを設定することで、効率よく再レンダリングされる。（以前あったものは維持）
-              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
               ))
           }
         </div>
